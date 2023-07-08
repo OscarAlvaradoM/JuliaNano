@@ -1,0 +1,13 @@
+# Climb into the root
+sudo su
+
+# Set the GPIO 
+# gpio79 is pin 12 on the Jetson Nano Sysfs
+echo 79 > /sys/class/gpio/export
+
+# Set if the pin is an Output or Input pin
+echo out > /sys/class/gpio/gpio79/direction
+
+# Set the digital pin 1 (HIGH) or 0 (LOW)
+echo 1 > /sys/class/gpio/gpio79/value
+echo 0 > /sys/class/gpio/gpio79/value
