@@ -11,8 +11,7 @@ offˍcommand = pipeline(`echo 0`, stdout="/sys/class/gpio/gpio79/value")
 #run(setˍcommand)
 #run(setupˍcommand)
 
-for i in 1:100
-	println(i)
+while true
 	run(onˍcommand)
 	sleep(0.05)
 	run(offˍcommand)
