@@ -1,19 +1,21 @@
-# Set the GPIO 
-# gpio79 is pin 12 on the Jetson Nano Sysfs
-setˍcommand = pipeline(`echo 79`, stdout="/sys/class/gpio/export")
+try
+	# Set the GPIO 
+	# gpio79 is pin 12 on the Jetson Nano Sysfs
+	write("/sys/class/gpio/export", "79")
+catch e
+	println("The port was open")
+end
 
 # Set if the pin is an Output or Input pin
-setupˍcommand = pipeline(`echo out`, stdout="/sys/class/gpio/gpio79/direction")
+write("/sys/class/gpio/gpio79/direction", "out")
 
 # Set the digital pin 1 (HIGH) or 0 (LOW)
-onˍcommand = pipeline(`echo 1`, stdout="/sys/class/gpio/gpio79/value")
-offˍcommand = pipeline(`echo 0`, stdout="/sys/class/gpio/gpio79/value")
-#run(setˍcommand)
-#run(setupˍcommand)
-
-while true
-	run(onˍcommand)
+for i in 1:100
+	write("/sys/class/gpio/gpio79/value", "1")
 	sleep(0.05)
-	run(offˍcommand)
+	write("/sys/class/gpio/gpio79/value", "1")
 	sleep(0.05)
 end
+
+# To close the port we had open
+write("/sys/class/gpio/unexport", "79")
