@@ -13,7 +13,7 @@ write("/sys/class/gpio/gpio79/direction", "out")
 for i in 1:100
 	write("/sys/class/gpio/gpio79/value", "1")
 	sleep(0.05)
-	write("/sys/class/gpio/gpio79/value", "1")
+	write("/sys/class/gpio/gpio79/value", "0")
 	sleep(0.05)
 end
 
