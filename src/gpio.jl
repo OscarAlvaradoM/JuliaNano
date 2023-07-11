@@ -22,6 +22,8 @@ module GPIO
         else
             print("The selected mode is not valid, try again with IN or OUT")
             return 
+        end
+        
         try
             write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
         catch
