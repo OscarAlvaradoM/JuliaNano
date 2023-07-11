@@ -1,4 +1,5 @@
-import gpio as GPIO
+include("gpio.jl")
+using .GPIO
 
 function blink(channel)
 	# Set the GPIO

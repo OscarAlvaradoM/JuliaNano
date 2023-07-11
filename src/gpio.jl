@@ -1,5 +1,6 @@
-module gpio
-    from Utils import *
+module GPIO
+    include("utils.jl")
+    using .Utils
 
     HIGH = "1"
     LOW  = "0"
