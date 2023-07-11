@@ -44,6 +44,11 @@ module GPIO
         write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
     end
 
+    function input(channel)
+        #write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
+        println("Hay que ver cómo leemos esto")
+    end
+
     function cleanup()
         # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)

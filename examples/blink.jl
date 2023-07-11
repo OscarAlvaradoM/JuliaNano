@@ -4,7 +4,6 @@ using .GPIO
 function blink(channel)
 	# Set the GPIO
 	GPIO.setmode()
-
 	# Set if the pin is an Output or Input pin
 	GPIO.setup(channel, "OUT"; initial=GPIO.HIGH)
 
@@ -23,4 +22,5 @@ function blink(channel)
 	end
 end
 
-blink(12)
+output_pin = 12
+blink(output_pin)
