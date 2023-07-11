@@ -11,7 +11,7 @@ module GPIO
         # Para ver si hay diferentes modelos de Jetson para usar acá. PENDIENTE
 
         # Cleanup all the ports
-        write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT
+        [write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT]
     end
 
     function setup(channel, mode;initial=HIGH)
@@ -37,7 +37,7 @@ module GPIO
 
     function cleanup()
         # Cleanup all the ports
-        write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT
+        [write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT]
     end
 
 end
