@@ -19,6 +19,7 @@ function blink(channel)
 	finally		
 		# To reset all the ports
 		GPIO.cleanup()
+	end
 end
 
 blink(12)
