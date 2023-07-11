@@ -1,7 +1,7 @@
 include("../src/gpio.jl")
 using .GPIO
 
-function simple_input(channel):
+function simple_input(channel)
     prev_value = ''
 
     # Set the GPIO
@@ -11,19 +11,20 @@ function simple_input(channel):
     try
         while true
             value = GPIO.input(channel)
-            if value != prev_value:
-                if value == GPIO.HIGH:
+            if value != prev_value
+                if value == GPIO.HIGH
                     value_str = "HIGH"
-                else:
+                else
                     value_str = "LOW"
                 end
                 prev_value = value
             end
-            time.sleep(1)
+            # time.sleep(1)
         end
     finally
         GPIO.cleanup()
     end
+end
 
 input_pin = 12
 simple_input(input_pin)
