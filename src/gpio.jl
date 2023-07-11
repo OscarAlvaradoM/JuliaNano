@@ -15,9 +15,9 @@ module GPIO
     end
 
     function setup(channel, mode;initial=HIGH)
-        if mode == "OUT" or mode == "OUTPUT"
+        if mode == "OUT" || mode == "OUTPUT"
             mode = "out"
-        elif mode == "IN" or mode == "INPUT"
+        elseif mode == "IN" || mode == "INPUT"
             mode = "in"
         else
             print("The selected mode is not valid, try again with IN or OUT")
