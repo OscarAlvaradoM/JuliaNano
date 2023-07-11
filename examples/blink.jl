@@ -1,4 +1,4 @@
-include("gpio.jl")
+include("../src/gpio.jl")
 using .GPIO
 
 function blink(channel)
