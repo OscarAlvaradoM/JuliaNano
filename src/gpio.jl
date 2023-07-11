@@ -29,7 +29,7 @@ module GPIO
         catch
             write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
-
+        end
         write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), initial)
     end
 
