@@ -12,7 +12,7 @@ module GPIO
 
         # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
-            println(key, Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            println(Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"], typeof(Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"]))
             write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
         end
     end
