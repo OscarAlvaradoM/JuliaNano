@@ -11,7 +11,7 @@ module GPIO
         # Para ver si hay diferentes modelos de Jetson para usar acá. PENDIENTE
 
         # Cleanup all the ports
-        [write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT]
+        [write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in Utils.JETSON_NANO_CHANNELS_DICT]
     end
 
     function setup(channel, mode;initial=HIGH)
@@ -25,21 +25,21 @@ module GPIO
         end
 
         try
-            write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
+            write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
         catch
-            write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
-            write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
+            write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
+            write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
         end
-        write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), initial)
+        write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), initial)
     end
 
     function output(channel, value)
-        write(joinpath(main_path, "gpio$(JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
+        write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
     end
 
     function cleanup()
         # Cleanup all the ports
-        [write(joinpath(main_path, "unexport"), JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT]
+        [write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"]) for key in JETSON_NANO_CHANNELS_DICT]
     end
 
 end
