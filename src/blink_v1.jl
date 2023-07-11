@@ -10,7 +10,7 @@ function blink(channel)
 
 	# Set the digital pin 1 (HIGH) or 0 (LOW)
 	try
-		while True 
+		while true 
 			output(channel, GPIO.HIGH)
 			sleep(0.1)
 			output(channel, GPIO.LOW)

@@ -48,7 +48,6 @@ module GPIO
     function cleanup()
         # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
-            println(key)
             write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
         end
     end
