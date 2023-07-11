@@ -1,27 +1,23 @@
-main_path = "/sys/class/gpio/"
+import gpio as GPIO
 
-function blink()
-	try
-		# Set the GPIO 
-		# gpio79 is pin 12 on the Jetson Nano Sysfs
-		write(joinpath(main_path, "export"), "79")
-	catch e
-		println("The port was open")
-	end
+function blink(channel)
+	# Set the GPIO
+	GPIO.setmode()
 
 	# Set if the pin is an Output or Input pin
-	write(joinpath(main_path, "gpio79/direction"), "out")
+	GPIO.setup(channel, "OUT"; initial=GPIO.HIGH)
 
 	# Set the digital pin 1 (HIGH) or 0 (LOW)
-	for _ in 1:10
-		write(joinpath(main_path, "gpio79/value"), "1")
-		sleep(0.1)
-		write(joinpath(main_path, "gpio79/value"), "0")
-		sleep(0.1)
-	end
-
-	# To close the port we had open
-	write(joinpath(main_path, "unexport"), "79")
+	try
+		while True 
+			output(channel, GPIO.HIGH)
+			sleep(0.1)
+			output(channel, GPIO.LOW)
+			sleep(0.1)
+		end
+	finally		
+		# To reset all the ports
+		GPIO.cleanup()
 end
 
-blink()
+blink(12)
