@@ -2,7 +2,7 @@ include("../src/gpio.jl")
 using .GPIO
 
 function simple_input(channel)
-    prev_value = ''
+    prev_value = ""
 
     # Set the GPIO
 	GPIO.setmode()
