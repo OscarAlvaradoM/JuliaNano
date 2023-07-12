@@ -13,16 +13,10 @@ function inout(in_channel, out_channel)
         while true
             value = GPIO.input(in_channel)
             if value != prev_value
-                if value == GPIO.HIGH
-                    value_str = "HIGH"
-                else
-                    value_str = "LOW"
-                end
+                GPIO.output(out_channel, value_str)
                 prev_value = value
             end
             sleep(0.1)
-            GPIO.output(out_channel, value_str)
-            println(prev_value)
         end
     finally
         GPIO.cleanup()
