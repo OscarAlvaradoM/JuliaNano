@@ -1,7 +1,7 @@
 include("../src/gpio.jl")
 using .GPIO
 
-function simple_input(channel)
+function input(channel)
     prev_value = ""
 
     # Set the GPIO
@@ -19,7 +19,7 @@ function simple_input(channel)
                 end
                 prev_value = value
             end
-                sleep(1)
+            sleep(1)
             println(prev_value)
         end
     finally
@@ -28,4 +28,4 @@ function simple_input(channel)
 end
 
 input_pin = 15
-simple_input(input_pin)
+input(input_pin)
