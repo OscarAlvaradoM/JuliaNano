@@ -19,7 +19,8 @@ function simple_input(channel)
                 end
                 prev_value = value
             end
-            # time.sleep(1)
+                sleep(1)
+            println(prev_value)
         end
     finally
         GPIO.cleanup()

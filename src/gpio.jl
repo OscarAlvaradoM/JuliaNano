@@ -41,12 +41,13 @@ module GPIO
     end
 
     function output(channel, value)
-        write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
+        pin_out = Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"]
+        write(joinpath(main_path, "gpio$(pin_out)", "value"), value)
     end
 
     function input(channel)
-        #write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), value)
-        println("Hay que ver cómo leemos esto")
+        pin_in = Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"]
+        open(io->read(io, String), joinpath(main_path, "gpio$()", "value"))
     end
 
     function cleanup()
