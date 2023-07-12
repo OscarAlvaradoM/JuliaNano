@@ -27,5 +27,5 @@ function simple_input(channel)
     end
 end
 
-input_pin = 5
+input_pin = 15
 simple_input(input_pin)
