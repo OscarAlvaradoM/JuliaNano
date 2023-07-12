@@ -47,7 +47,7 @@ module GPIO
 
     function input(channel)
         pin_in = Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"]
-        open(io->read(io, String), joinpath(main_path, "gpio$()", "value"))
+        open(io->read(io, String), joinpath(main_path, "gpio$(pin_in)", "value"))
     end
 
     function cleanup()
