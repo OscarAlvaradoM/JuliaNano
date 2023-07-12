@@ -38,7 +38,9 @@ module GPIO
         write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"), initial)
     end
     function setup(channel::Int, mode::String)
-        if mode == "IN" || mode == "INPUT"
+        if mode == "OUT" || mode == "OUTPUT"
+            mode = "out"
+        elseif mode == "IN" || mode == "INPUT"
             mode = "in"
         else
             print("The selected mode is not valid, try again with IN or OUT")
@@ -51,7 +53,6 @@ module GPIO
             write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/direction"), mode)
         end
-        write(joinpath(main_path, "gpio$(Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])/value"))
     end
 
     function output(channel, value)
