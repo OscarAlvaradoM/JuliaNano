@@ -22,7 +22,10 @@ module GPIO
             end
         end
         if isdir(main_path)
-            write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            try
+                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            catch
+                println("Ya está desactivado")
         end
     end
 
@@ -30,7 +33,10 @@ module GPIO
         println("activacion", key)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
         if isdir(main_path)
-            write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            try
+                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            catch
+                prinln("Ya está activado")
         end
         if ~isnothing(pwm_id) 
             if isdir(joinpath(pwm_path, "pwmchip0"))
