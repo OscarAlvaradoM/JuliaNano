@@ -149,10 +149,10 @@ module GPIO
         end
 
         frequency_hz = pwm.frequency_hz
-        period_ns = int(1000000000.0 / frequency_hz)
+        period_ns = trunc(Int, 1000000000.0 / frequency_hz)
 
         channel = pwm.channel
-        duty_cycle_ns = int(period_ns * (duty_cycle_percent / 100.0))
+        duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
         setpwmdutycycle(channel, _duty_cycle_ns)
 
         if start
@@ -160,4 +160,3 @@ module GPIO
         end
     end
 end
-
