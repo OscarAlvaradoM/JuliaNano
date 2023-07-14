@@ -96,19 +96,32 @@ module GPIO
         frequency_hz::Number
     end
 
-    function getpwmpath(pwm::PWM)
-        pwm_id = getpwmid(pwm)
-        joinpath(pwm_path, "pwmchip" * pwm_id)
+    function getpwmpath()
+        joinpath(pwm_path, "pwmchip0")
     end
 
     function getpwmexportpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(getpwmpath(pwm), "export")
+        joinpath(getpwmpath(), "export")
     end
 
     function getpwmunexportpath(pwm::PWM)
+        joinpath(getpwmpath(), "unexport")
+    end
+
+    function getpwmperiodpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(getpwmpath(pwm), "unexport")
+        joinpath(getpwmpath(), "pwm" * pwm_id, "period")
+    end
+
+    function getpwmenablepath(pwm::PWM)
+        pwm_id = getpwmid(pwm)
+        joinpath(getpwmpath(), "pwm" * pwm_id, "enable")
+    end
+
+    function getpwmdutycyclepath(pwm::PWM)
+        pwm_id = getpwmid(pwm)
+        joinpath(getpwmpath(), "pwm" * pwm_id, "duty_cycle")
     end
 
     function exportpwm(pwm::PWM)
@@ -123,12 +136,12 @@ module GPIO
 
     function disablepwm(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        write(joinpath(getpwmpath(pwm), "pwm" * pwm_id, "enable"), "0")
+        write(getpwmenablepath(pwm), "0")
     end
 
     function enablepwm(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        write(joinpath(getpwmpath(pwm), "pwm" * pwm_id, "enable"), "1")
+        write(getpwmenablepath(pwm), "1")
     end
 
     function start(pwm::PWM, duty_cycle_percent::Number)
@@ -149,9 +162,13 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        pwm_id = getpwmid(pwm)
         println(duty_cycle_ns)
-        write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "duty_cycle"), string(duty_cycle_ns))
+        write(getpwmdutycyclepath(pwm), string(duty_cycle_ns))
+    end
+
+    function setpwmperiod(pwm, period_ns)
+        write(getpwmperiodpath(pwm), string(period_ns))
+        
     end
 
     function changedutycycle(pwm::PWM, duty_cycle_percent::Number; start::Bool=false)
@@ -161,6 +178,7 @@ module GPIO
 
         frequency_hz = pwm.frequency_hz
         period_ns = trunc(Int, 1000000000.0 / frequency_hz)
+        setpwmperiod(pwm, period_ns)
 
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
         setpwmdutycycle(pwm, duty_cycle_ns)
