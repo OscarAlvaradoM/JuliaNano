@@ -13,25 +13,31 @@ module GPIO
         # Cleanup port
         println("limpieza", key)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
-            enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
-            open(enable_path, "w") do file
-                write(file, "0")
-            write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
+        if ~isnothing(pwm_id)
+            if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
+                write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"), "0")
+            end
+            if isdir(joinpath(pwm_path, "pwmchip0"))
+                write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
             end
         end
-        write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+        if isdir(main_path)
+            write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+        end
     end
 
     function activeup(key::Int)
         println("activacion", key)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-        write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
-            write(joinpath(pwm_path, "pwmchip0", "export"), pwm_id)
-            enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
-            open(enable_path, "w") do file
-                write(file, "1")
+        if isdir(main_path)
+            write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+        end
+        if ~isnothing(pwm_id) 
+            if isdir(joinpath(pwm_path, "pwmchip0"))
+                write(joinpath(pwm_path, "pwmchip0", "export"), pwm_id)
+            end
+            if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
+                write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"), "1")
             end
         end
     end
