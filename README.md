@@ -10,3 +10,11 @@ Desde el REPL de Julia ejecutemos el siguiente comando para la instalación:
 posteriormente importamos la paquetería:
 
 `import Pluto`
+
+## PWM
+
+Hay que ejecutar el siguiente comando para poder activar los pines PWM:
+
+`$ sudo /opt/nvidia/jetson-io/jetson-io.py`
+
+El siguiente [video](#https://www.youtube.com/watch?v=eImDQ0PVu2Y) lo explica muy bien.
