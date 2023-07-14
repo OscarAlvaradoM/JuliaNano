@@ -26,6 +26,7 @@ module GPIO
                 write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
             catch
                 println("Ya está desactivado")
+            end
         end
     end
 
@@ -37,6 +38,7 @@ module GPIO
                 write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
             catch
                 prinln("Ya está activado")
+            end
         end
         if ~isnothing(pwm_id) 
             if isdir(joinpath(pwm_path, "pwmchip0"))
