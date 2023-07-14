@@ -152,6 +152,7 @@ module GPIO
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
         pwm_id = getpwmid(pwm)
+        println(duty_cycle_ns)
         write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "duty_cycle"), string(duty_cycle_ns))
     end
 
