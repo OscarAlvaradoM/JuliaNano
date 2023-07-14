@@ -93,7 +93,7 @@ module GPIO
         joinpath(pwm_path, "pwmchip" + pwm_id, "export")
     end
 
-    function getpwmunexportpath(pwm::PWM):
+    function getpwmunexportpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
         joinpath(pwm_path, "pwmchip" + pwm_id, "unexport")
     end
@@ -129,16 +129,16 @@ module GPIO
         Utils.JETSON_NANO_CHANNELS_DICT[pwm.channel]["pwm_id"]
     end
 
-    function getpwmpath(pwm::PWM):
+    function getpwmpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
         joinpath(pwm_path, "pwmchip" + pwm_id)
     end
 
-    function setpwmdutycycle(channel, duty_cycle_ns):
+    function setpwmdutycycle(channel, duty_cycle_ns)
         write(joinpath(pwm_path, "duty_cycle"), duty_cycle_ns)
     end
 
-    function enablepwm(pwm::PWM):
+    function enablepwm(pwm::PWM)
         write(joinpath(getpwmpath(pwm), "enable"), "1")
     end
 
