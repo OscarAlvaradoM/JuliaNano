@@ -21,8 +21,8 @@ module GPIO
                     write(joinpath(pwm_path, "pwmchip" * pwm_id, "export"), pwm_id)
                 else
                     write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                    while !isfile(enable_path) || !isreadable(enable_path) || !iswritable(enable_path)
-                        sleep(0.01)
+                    open(enable_path, "w") do file
+                        write(file, "1")
                     end
                 end
             catch
@@ -32,8 +32,8 @@ module GPIO
                 else
                     write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                     write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                    while !isfile(enable_path) || !isreadable(enable_path) || !iswritable(enable_path)
-                        sleep(0.01)
+                    open(enable_path, "w") do file
+                        write(file, "1")
                     end
                 end
             end
