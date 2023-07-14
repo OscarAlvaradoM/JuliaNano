@@ -22,7 +22,7 @@ module GPIO
                 else
                     write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                     while !isfile(enable_path) || !isreadable(enable_path) || !iswritable(enable_path)
-                        @sleep 0.01
+                        sleep(0.01)
                     end
                 end
             catch
