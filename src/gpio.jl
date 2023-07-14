@@ -88,6 +88,14 @@ module GPIO
         # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
             write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
+            if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0"))
+                enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
+                open(enable_path, "w") do file
+                    write(file, "0")
+                write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
+                end
+            end
         end
     end
 
