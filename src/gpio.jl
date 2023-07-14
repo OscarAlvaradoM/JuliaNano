@@ -12,15 +12,15 @@ module GPIO
     function cleanup(key::Int)
         # Cleanup port
         println("limpieza", key)
-        write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0"))
+        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
             enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
             open(enable_path, "w") do file
                 write(file, "0")
             write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
             end
         end
+        write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
     end
 
     function activeup(key::Int)
