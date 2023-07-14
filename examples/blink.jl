@@ -5,7 +5,7 @@ function blink(channel)
 	# Set the GPIO
 	GPIO.setmode()
 	# Set if the pin is an Output or Input pin
-	GPIO.setup(channel, "OUT"; initial=GPIO.HIGH)
+	GPIO.setup(channel, "OUT", GPIO.HIGH)
 
 	# Set the digital pin 1 (HIGH) or 0 (LOW)
 	try
