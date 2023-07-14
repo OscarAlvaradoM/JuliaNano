@@ -143,7 +143,7 @@ module GPIO
     end
 
     function changedutycycle(pwm::PWM, duty_cycle_percent::Number; start::Bool)
-        if duty_cycle_percent < 0.0 || duty_cycle_percent > 100.0:
+        if duty_cycle_percent < 0.0 || duty_cycle_percent > 100.0
             error("Percentage not valid, please try with 0 < values < 100")
         end
 
