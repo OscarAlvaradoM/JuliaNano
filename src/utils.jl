@@ -16,8 +16,8 @@ module Utils
         29 => Dict("file_number" => "149", "name" => "GPIO01",      "pwm_id" => nothing),
         31 => Dict("file_number" => "200", "name" => "GPIO11",      "pwm_id" => nothing),
         # Older versions of L4T have a DT bug which instantiates a bogus device which prevents this library from using this PWM channel.
-        32 => Dict("file_number" => "168", "name" => "GPIO07",      "pwm_id" => 0),
-        33 => Dict("file_number" => "38",  "name" => "GPIO13",      "pwm_id" => 2),
+        32 => Dict("file_number" => "168", "name" => "GPIO07",      "pwm_id" => "0"),
+        33 => Dict("file_number" => "38",  "name" => "GPIO13",      "pwm_id" => "2"),
         35 => Dict("file_number" => "76",  "name" => "I2S0_FS",     "pwm_id" => nothing),
         36 => Dict("file_number" => "51",  "name" => "UART1_CTS",   "pwm_id" => nothing),
         37 => Dict("file_number" => "12",  "name" => "SPI1_MOSI",   "pwm_id" => nothing),
