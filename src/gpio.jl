@@ -17,15 +17,15 @@ module GPIO
                 write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 if key in [32, 33]
                     pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-                    write(joinpath(pwm_path, "pwmchip" + String(pwm_id), "export"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip" * string(pwm_id), "export"), pwm_id)
                 end
             catch
                 write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 if key in [32, 33]
                     pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-                    write(joinpath(pwm_path, "pwmchip" + String(pwm_id), "unexport"), pwm_id)
-                    write(joinpath(pwm_path, "pwmchip" + String(pwm_id), "export"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip" * string(pwm_id), "unexport"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip" * string(pwm_id), "export"), pwm_id)
                 end
             end
         end
@@ -90,12 +90,12 @@ module GPIO
 
     function getpwmexportpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(pwm_path, "pwmchip" + String(pwm_id), "export")
+        joinpath(pwm_path, "pwmchip" * string(pwm_id), "export")
     end
 
     function getpwmunexportpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(pwm_path, "pwmchip" + String(pwm_id), "unexport")
+        joinpath(pwm_path, "pwmchip" * string(pwm_id), "unexport")
     end
 
     function exportpwm(pwm::PWM)
@@ -131,7 +131,7 @@ module GPIO
 
     function getpwmpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(pwm_path, "pwmchip" + String(pwm_id))
+        joinpath(pwm_path, "pwmchip" * string(pwm_id))
     end
 
     function setpwmdutycycle(channel, duty_cycle_ns)
