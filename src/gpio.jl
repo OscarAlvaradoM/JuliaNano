@@ -153,7 +153,7 @@ module GPIO
 
         channel = pwm.channel
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
-        setpwmdutycycle(channel, _duty_cycle_ns)
+        setpwmdutycycle(channel, duty_cycle_ns)
 
         if start
             enablepwm(pwm)
