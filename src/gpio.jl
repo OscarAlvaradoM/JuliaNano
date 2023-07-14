@@ -86,16 +86,13 @@ module GPIO
     struct PWM
         channel::Int
         frequency_hz::Number
-
-        _export_pwm(self._ch_info)
-        self._started = False
-        self._reconfigure(frequency_hz, 50.0)
     end
 
-    function getpwmexportpath(pwm::PWM):
+    function getpwmexportpath(pwm::PWM)
         pwm_id = getpwmid(pwm)
         joinpath(pwm_path, "pwmchip" + pwm_id, "export")
     end
+
     function getpwmunexportpath(pwm::PWM):
         pwm_id = getpwmid(pwm)
         joinpath(pwm_path, "pwmchip" + pwm_id, "unexport")
