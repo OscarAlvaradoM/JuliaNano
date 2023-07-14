@@ -15,20 +15,22 @@ module GPIO
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
             pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
             try
-                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
                     println("Bien")
                     println(pwm_id)
                     write(joinpath(pwm_path, "pwmchip" * pwm_id, "export"), pwm_id)
+                else
+                    write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 end
             catch
-                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
                     println("Mal")
                     println(pwm_id)
                     write(joinpath(pwm_path, "pwmchip" * pwm_id, "unexport"), pwm_id)
                     write(joinpath(pwm_path, "pwmchip" * pwm_id, "export"), pwm_id)
+                else
+                    write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+                    write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                 end
             end
         end
