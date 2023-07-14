@@ -37,7 +37,7 @@ module GPIO
             try
                 write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
             catch
-                prinln("Ya está activado")
+                println("Ya está activado")
             end
         end
         if ~isnothing(pwm_id) 
