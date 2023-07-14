@@ -135,8 +135,9 @@ module GPIO
         joinpath(pwm_path, "pwmchip" * pwm_id)
     end
 
-    function setpwmdutycycle(channel, duty_cycle_ns)
-        write(joinpath(pwm_path, "duty_cycle"), duty_cycle_ns)
+    function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
+        pwm_id = getpwmid(pwm)
+        write(joinpath(pwm_path, "pwmchip" * pwm_id, "pwm" * pwm_id, "duty_cycle"), duty_cycle_ns)
     end
 
     function enablepwm(pwm::PWM)
@@ -151,9 +152,8 @@ module GPIO
         frequency_hz = pwm.frequency_hz
         period_ns = trunc(Int, 1000000000.0 / frequency_hz)
 
-        channel = pwm.channel
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
-        setpwmdutycycle(channel, duty_cycle_ns)
+        setpwmdutycycle(pwm, duty_cycle_ns)
 
         if start
             enablepwm(pwm)
