@@ -168,7 +168,6 @@ module GPIO
 
     function setpwmperiod(pwm, period_ns)
         write(getpwmperiodpath(pwm), string(period_ns))
-        
     end
 
     function changedutycycle(pwm::PWM, duty_cycle_percent::Number; start::Bool=false)
@@ -177,7 +176,7 @@ module GPIO
         end
 
         frequency_hz = pwm.frequency_hz
-        period_ns = trunc(Int, 100000000.0 / frequency_hz)
+        period_ns = trunc(Int, 1000000000.0 / frequency_hz)
         setpwmperiod(pwm, period_ns)
 
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
