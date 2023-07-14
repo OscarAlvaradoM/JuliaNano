@@ -21,7 +21,7 @@ function pwmbreath(channel)
                 incr = -incr
             end
             val += incr
-            pritln(val)
+            println(val)
             GPIO.changedutycycle(pwm, val)
         end
     finally
