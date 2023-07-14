@@ -9,7 +9,7 @@ function pwmbreath(channel)
     pwm = GPIO.PWM(output_pin, 50)
     val = 25
     incr = 5
-    pwm.start(val)
+    GPIO.start(pwm, val)
 
     try
         while True:
@@ -21,13 +21,13 @@ function pwmbreath(channel)
                 incr = -incr
             end
             val += incr
-            pwm.ChangeDutyCycle(val)
+            GPIO.changedutycycle(pwm, val)
         end
     finally:
-        pwm.stop()
+        GPIO.stop(pwm)
         GPIO.cleanup()
     end
 end
 
-output_pin = 33
-blink(output_pin)
+output_pin = 32
+pwmbreath(output_pin)
