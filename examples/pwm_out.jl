@@ -12,7 +12,7 @@ function pwmbreath(channel)
     GPIO.start(pwm, val)
 
     try
-        while True:
+        while true
             sleep(0.25)
             if val >= 100
                 incr = -incr
