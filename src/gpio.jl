@@ -15,10 +15,10 @@ module GPIO
         # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
             pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-            enable_path = joinpath(pwm_path, "pwmchip" * pwm_id, "pwm" * pwm_id, "enable")
+            enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
             try
                 if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
-                    write(joinpath(pwm_path, "pwmchip" * pwm_id, "export"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip0" "export"), pwm_id)
                 else
                     write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                     open(enable_path, "w") do file
@@ -27,8 +27,8 @@ module GPIO
                 end
             catch
                 if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
-                    write(joinpath(pwm_path, "pwmchip" * pwm_id, "unexport"), pwm_id)
-                    write(joinpath(pwm_path, "pwmchip" * pwm_id, "export"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip0" "unexport"), pwm_id)
+                    write(joinpath(pwm_path, "pwmchip0" "export"), pwm_id)
                 else
                     write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
                     write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
@@ -149,8 +149,8 @@ module GPIO
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
         pwm_id = getpwmid(pwm)
-        println(joinpath(pwm_path, "pwmchip" * pwm_id, "pwm" * pwm_id, "duty_cycle"), duty_cycle_ns)
-        write(joinpath(pwm_path, "pwmchip" * pwm_id, "pwm" * pwm_id, "duty_cycle"), string(duty_cycle_ns))
+        println(joinpath(pwm_path, "pwmchip0" "pwm" * pwm_id, "duty_cycle"), duty_cycle_ns)
+        write(joinpath(pwm_path, "pwmchip0" "pwm" * pwm_id, "duty_cycle"), string(duty_cycle_ns))
     end
 
     function changedutycycle(pwm::PWM, duty_cycle_percent::Number; start::Bool)
