@@ -6,7 +6,7 @@ function pwmbreath(channel)
 	GPIO.setmode()
 	# Set if the pin is an Output or Input pin
 	GPIO.setup(channel, "OUT", GPIO.HIGH)
-    pwm = GPIO.PWM(output_pin, 100)
+    pwm = GPIO.PWM(output_pin, 50)
     val = 25
     incr = 5
     GPIO.start(pwm, val)
@@ -14,13 +14,14 @@ function pwmbreath(channel)
     try
         while true
             sleep(0.25)
-            if val >= 100
+            if val >= 50
                 incr = -incr
             end
             if val <= 0
                 incr = -incr
             end
             val += incr
+            pritln(val)
             GPIO.changedutycycle(pwm, val)
         end
     finally
