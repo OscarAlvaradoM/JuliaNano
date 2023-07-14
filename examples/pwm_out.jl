@@ -14,16 +14,16 @@ function pwmbreath(channel)
     try
         while True:
             sleep(0.25)
-            if val >= 100:
+            if val >= 100
                 incr = -incr
             end
-            if val <= 0:
+            if val <= 0
                 incr = -incr
             end
             val += incr
             GPIO.changedutycycle(pwm, val)
         end
-    finally:
+    finally
         GPIO.stop(pwm)
         GPIO.cleanup()
     end
