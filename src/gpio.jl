@@ -9,32 +9,40 @@ module GPIO
     main_path = "/sys/class/gpio/"
     pwm_path  = "/sys/devices/7000a000.pwm/pwm/"
 
+    function cleanup(key::Int)
+        # Cleanup port
+        write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
+        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0"))
+            enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
+            open(enable_path, "w") do file
+                write(file, "0")
+            write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
+            end
+        end
+    end
+
+    function activeup(key::Int)
+        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
+        write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+        if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
+            write(joinpath(pwm_path, "pwmchip0", "export"), pwm_id)
+            enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
+            open(enable_path, "w") do file
+                write(file, "1")
+            end
+        end
+    end
+
     function setmode()
         # Para ver si hay diferentes modelos de Jetson para usar acá. PENDIENTE
 
-        # Cleanup all the ports
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
-            pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-            try
-                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
-                    write(joinpath(pwm_path, "pwmchip0", "export"), pwm_id)
-                    enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
-                    open(enable_path, "w") do file
-                        write(file, "1")
-                    end
-                end
+            try 
+                activeup(key)
             catch
-                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-                if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip" * pwm_id))
-                    write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
-                    write(joinpath(pwm_path, "pwmchip0", "export"), pwm_id)
-                    enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
-                    open(enable_path, "w") do file
-                        write(file, "1")
-                    end
-                end
+                cleanup(key)
+                activeup(key)
             end
         end
     end
@@ -82,21 +90,6 @@ module GPIO
     function input(channel)
         pin_in = Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"]
         open(io->read(io, String), joinpath(main_path, "gpio$(pin_in)", "value"))
-    end
-
-    function cleanup()
-        # Cleanup all the ports
-        for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
-            write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
-            pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-            if ~isnothing(pwm_id) && isdir(joinpath(pwm_path, "pwmchip0"))
-                enable_path = joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable")
-                open(enable_path, "w") do file
-                    write(file, "0")
-                write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
-                end
-            end
-        end
     end
 
     struct PWM

@@ -13,8 +13,8 @@ function pwmbreath(channel)
 
     try
         while true
-            sleep(0.25)
-            if val >= 50
+            sleep(1)
+            if val >= 100
                 incr = -incr
             end
             if val <= 0
