@@ -177,7 +177,7 @@ module GPIO
         end
 
         frequency_hz = pwm.frequency_hz
-        period_ns = trunc(Int, 1000000.0 / frequency_hz)
+        period_ns = trunc(Int, 100000000.0 / frequency_hz)
         setpwmperiod(pwm, period_ns)
 
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
