@@ -4,8 +4,8 @@ using Base.Filesystem
 
 GPIO.setmode()
 path = "/sys/class/gpio/"
-directories = filter(islink, readdir(path))
-print(readdir(path))
+directories = filter(isdir, joinpath.(path, readdir(path)))
+println(readdir(path))
 println(directories)
 
 for directory in directories
