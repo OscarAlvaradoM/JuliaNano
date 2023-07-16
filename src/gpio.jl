@@ -118,7 +118,6 @@ module GPIO
     end
 
     function getpwmexportpath(pwm::PWM)
-        pwm_id = getpwmid(pwm)
         joinpath(getpwmpath(), "export")
     end
 
@@ -160,8 +159,10 @@ module GPIO
     end
 
     function start(pwm::PWM, duty_cycle_percent::Number)
-        #exportpwm(pwm)
-        changedutycycle(pwm, duty_cycle_percent; start=true)
+        # Anything that doesn't match new frequency
+        pwm.frequency_hz = -pwm.frequency_hz
+        reconfigure(pwm, -pwm.frequency_hz, 0.0)
+        reconfigure(pwm, pwm.frequency_hz, duty_cycle_percent; start=true)
     end
 
     function stop(pwm::PWM)
@@ -177,22 +178,26 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        println(duty_cycle_ns)
         write(getpwmdutycyclepath(pwm), string(duty_cycle_ns))
     end
 
     function setpwmperiod(pwm, period_ns)
         write(getpwmperiodpath(pwm), string(period_ns))
     end
-
-    function changedutycycle(pwm::PWM, duty_cycle_percent::Number; start::Bool=false)
+    
+    function reconfigure(pwm::PWM, frequency_hz::Real, duty_cycle_percent::Number; start::Bool=false)
         if duty_cycle_percent < 0.0 || duty_cycle_percent > 100.0
             error("Percentage not valid, please try with 0 < values < 100")
         end
 
-        frequency_hz = pwm.frequency_hz
-        period_ns = trunc(Int, 1000000000.0 / frequency_hz)
-        setpwmperiod(pwm, period_ns)
+        freq_change = start || frequency_hz != pwm.frequency_hz
+        if freq_change
+            pwm.frequency_hz = frequency_hz
+            period_ns = trunc(Int, 1000000000.0 / frequency_hz)
+            setpwmdutycycle(pwm, 0)
+            setpwmperiod(pwm, period_ns)
+        end
+        
 
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
         println(duty_cycle_percent, ' ', duty_cycle_ns, ' ', period_ns)
@@ -201,5 +206,9 @@ module GPIO
         if start
             enablepwm(pwm)
         end
+    end
+
+    function changedutycycle(pwm::PWM, duty_cycle_percent::Number)
+        reconfigure(pwm, pwm.frequency_hz, duty_cycle_percent)
     end
 end
