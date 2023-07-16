@@ -1,7 +1,7 @@
 module GPIO
     include("utils.jl")
     using .Utils
-    using Base
+    using Base.@kwdef
 
     HIGH = "1"
     LOW  = "0"
@@ -108,10 +108,10 @@ module GPIO
         open(io->read(io, String), joinpath(main_path, "gpio$(pin_in)", "value"))
     end
 
-    mutable struct PWM
+    @kwdef mutable struct PWM
         channel::Int
         frequency_hz::Number
-        period_ns::Int64 = 0
+        period_ns::Int64 = Default(0)
     end
 
     function getpwmpath()
