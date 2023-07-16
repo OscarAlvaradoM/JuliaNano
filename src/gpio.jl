@@ -33,7 +33,7 @@ module GPIO
             try
                 write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             catch
-                println("Ya está desactivado")
+                println("Channel $channel already disabled")
             end
         end
     end
@@ -67,7 +67,7 @@ module GPIO
             try
                 write(joinpath(main_path, "unexport"), file_number)
             catch
-                println("Ya está desactivado")
+                println("File $file_number already disabled")
             end
         end
     end
@@ -102,7 +102,7 @@ module GPIO
             try
                 write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             catch
-                println("Ya está activado")
+                println("Channel $channel already enabled")
             end
         end
         if ~isnothing(pwm_id) 
