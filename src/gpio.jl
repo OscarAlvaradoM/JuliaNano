@@ -47,8 +47,8 @@ module GPIO
             end
         end
         if isdir(main_path)
+            pintln(file_number)
             try
-                pintln(file_number)
                 write(joinpath(main_path, "unexport"), file_number)
             catch
                 println("Ya está desactivado")
