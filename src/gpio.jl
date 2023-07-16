@@ -111,6 +111,7 @@ module GPIO
     mutable struct PWM
         channel::Int
         frequency_hz::Number
+        period_ns::Number=0
     end
 
     function getpwmpath()
@@ -193,14 +194,14 @@ module GPIO
         freq_change = start || frequency_hz != pwm.frequency_hz
         if freq_change
             pwm.frequency_hz = frequency_hz
-            period_ns = trunc(Int, 1000000000.0 / frequency_hz)
+            pwm.period_ns = trunc(Int, 1000000000.0 / frequency_hz)
             setpwmdutycycle(pwm, 0)
-            setpwmperiod(pwm, period_ns)
+            setpwmperiod(pwm, pwm.period_ns)
         end
         
 
-        duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
-        println(duty_cycle_percent, ' ', duty_cycle_ns, ' ', period_ns)
+        duty_cycle_ns = trunc(Int, pwm.period_ns * (duty_cycle_percent / 100.0))
+        println(duty_cycle_percent, ' ', duty_cycle_ns, ' ', pwm.period_ns)
         setpwmdutycycle(pwm, duty_cycle_ns)
 
         if start
