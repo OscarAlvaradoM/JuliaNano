@@ -52,6 +52,7 @@ function show_camera()
                     cv2.imshow(window_title, frame)
                 else
                     break
+                end
                 keyCode = cv2.waitKey(10) & 0xFF
                 # Stop the program on the ESC key or 'q'
                 if keyCode == 27 || keyCode == UInt8('q')
