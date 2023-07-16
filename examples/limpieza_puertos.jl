@@ -7,7 +7,7 @@ path = "/sys/class/gpio/"
 directories = filter(isdir, joinpath.(path, readdir(path)))
 
 for directory in directories
-    if ocursin("gpio", basename(directory))
+    if occursin("gpio", basename(directory))
        GPIO.cleanup(parse(Int64, directory[5:end]))
     end
 end
