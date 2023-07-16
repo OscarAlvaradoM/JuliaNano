@@ -69,5 +69,4 @@ function show_camera()
 end
 
 # Example usage
-pipeline = gstreamer_pipeline()
-println(pipeline)
+show_camera()
