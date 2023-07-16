@@ -26,7 +26,7 @@ function pwmbreath(channel)
         end
     finally
         GPIO.stop(pwm)
-        GPIO.cleanup()
+        GPIO.cleanup(output_pin)
     end
 end
 

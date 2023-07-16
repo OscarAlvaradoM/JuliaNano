@@ -152,12 +152,10 @@ module GPIO
     end
 
     function disablepwm(pwm::PWM)
-        pwm_id = getpwmid(pwm)
         write(getpwmenablepath(pwm), "0")
     end
 
     function enablepwm(pwm::PWM)
-        pwm_id = getpwmid(pwm)
         write(getpwmenablepath(pwm), "1")
     end
 
