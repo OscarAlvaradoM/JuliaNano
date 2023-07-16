@@ -208,13 +208,13 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        read(getpwmdutycyclepath(pwm), String)
+        println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
         open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
             seek(f_duty_cycle, 0)
             write(f_duty_cycle, string(duty_cycle_ns))
             flush(f_duty_cycle)
         end
-        read(getpwmdutycyclepath(pwm), String)
+        println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
     end
 
     function setpwmperiod(pwm, period_ns)
