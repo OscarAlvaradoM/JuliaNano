@@ -1,12 +1,8 @@
 include("../src/gpio.jl")
 using .GPIO
 using Base.Filesystem
-using Regex
 
 GPIO.setmode()
-
-
-
 path = "/sys/class/gpio/"
 directories = filter(isdir, readdir(path))
 
