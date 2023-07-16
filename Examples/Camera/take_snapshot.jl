@@ -33,7 +33,7 @@ end
 function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
     command = "gst-launch-1.0 "*pipeline
-    run(`nvarguscamerasrc sensor-id=0`)
+    run(`gst-launch-1.0 nvarguscamerasrc sensor-id=0`)
 end
 
 # function show_camera()
