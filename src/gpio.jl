@@ -47,7 +47,7 @@ module GPIO
             end
         end
         if isdir(main_path)
-            pintln(file_number)
+            println(file_number)
             try
                 write(joinpath(main_path, "unexport"), file_number)
             catch
