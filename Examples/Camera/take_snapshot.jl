@@ -1,4 +1,4 @@
-using VideoIO
+using VideoIO, Images
 using OpenCV
 
 """
@@ -38,7 +38,7 @@ function show_camera()
     window_title = "CSI Camera"
     
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-    video_capture = OpenCV.VideoCapture(gstreamer_pipeline(flip_method=0))
+    video_capture = VideoIO.open(gstreamer_pipeline(flip_method=0))
     #ret, img = OpenCV.read(video_capture)
     if !isnothing(video_capture)
         try
