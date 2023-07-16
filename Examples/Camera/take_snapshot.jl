@@ -1,6 +1,3 @@
-using VideoIO, Images
-using OpenCV
-
 """
     gstreamer_pipeline([sensor_id::Int=0[, capture_width::Int=1920[, capture_height::Int=1080[, display_width::Int=960[, display_height::Int=540[, framerate::Int=30[, flip_method::Int=0]]]]]]])
 
@@ -35,7 +32,8 @@ end
 
 function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
-    run("gst-launch-1.0 "*pipeline)
+    command = "gst-launch-1.0 "*pipeline
+    run(`$(command)`)
 end
 
 # function show_camera()
