@@ -4,7 +4,7 @@ using Base.Filesystem
 
 GPIO.setmode()
 path = "/sys/class/gpio/"
-directories = filter(isdir, readdir(path))
+directories = filter(islink, readdir(path))
 print(readdir(path))
 println(directories)
 
