@@ -162,12 +162,12 @@ module GPIO
 
     function getpwmenablepath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(getpwmpath(), "pwm" * pwm_id, "enable")
+        joinpath(getpwmpath(), "pwm$(pwm_id)", "enable")
     end
 
     function getpwmdutycyclepath(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        joinpath(getpwmpath(), "pwm" * pwm_id, "duty_cycle")
+        joinpath(getpwmpath(), "pwm$(pwm_id)", "duty_cycle")
     end
 
     function exportpwm(pwm::PWM)
@@ -208,16 +208,13 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
+        read(getpwmdutycyclepath(pwm), String)
         open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
-            # Move the file pointer to the beginning
             seek(f_duty_cycle, 0)
-        
-            # Write the duty cycle value to the file
             write(f_duty_cycle, string(duty_cycle_ns))
-        
-            # Flush the changes to the file
             flush(f_duty_cycle)
         end
+        read(getpwmdutycyclepath(pwm), String)
     end
 
     function setpwmperiod(pwm, period_ns)
