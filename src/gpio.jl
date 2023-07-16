@@ -1,7 +1,8 @@
+using Base.@kwdef
+
 module GPIO
     include("utils.jl")
     using .Utils
-    using Base.@kwdef
 
     HIGH = "1"
     LOW  = "0"
