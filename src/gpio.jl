@@ -31,6 +31,7 @@ module GPIO
 
     function cleanup(file_number::String)
         # Cleanup port
+        pwm_id = nothing
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
             if file_number == Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"]
                 pwm_id = Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
