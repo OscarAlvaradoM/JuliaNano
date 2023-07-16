@@ -111,18 +111,18 @@ module GPIO
     mutable struct PWM
         channel::Int
         frequency_hz::Number
-        period_ns::Number=0
+        period_ns::Int64 = 0
     end
 
     function getpwmpath()
         joinpath(pwm_path, "pwmchip0")
     end
 
-    function getpwmexportpath(pwm::PWM)
+    function getpwmexportpath()
         joinpath(getpwmpath(), "export")
     end
 
-    function getpwmunexportpath(pwm::PWM)
+    function getpwmunexportpath()
         joinpath(getpwmpath(), "unexport")
     end
 
@@ -143,12 +143,12 @@ module GPIO
 
     function exportpwm(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        write(getpwmexportpath(pwm), pwm_id)
+        write(getpwmexportpath(), pwm_id)
     end
 
     function unexportpwm(pwm::PWM)
         pwm_id = getpwmid(pwm)
-        write(getpwmunexportpath(pwm), pwm_id)
+        write(getpwmunexportpath(), pwm_id)
     end
 
     function disablepwm(pwm::PWM)
