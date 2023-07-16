@@ -10,7 +10,7 @@ function pwmbreath(channel)
     val = 25
     incr = 5
     GPIO.start(pwm, val)
-
+    sleep(10)
     # try
     while true
         sleep(1)
