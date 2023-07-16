@@ -222,6 +222,7 @@ module GPIO
 
         freq_change = start || frequency_hz != pwm.frequency_hz
         if freq_change
+            println("Cambió la frecuencia")
             pwm.frequency_hz = frequency_hz
             pwm.period_ns = trunc(Int, 1000000000.0 / frequency_hz)
             setpwmdutycycle(pwm, 0)
