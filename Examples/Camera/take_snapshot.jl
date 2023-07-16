@@ -39,6 +39,7 @@ function show_camera()
     
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     video_capture = OpenCV.VideoCapture(gstreamer_pipeline(flip_method=0))
+    ret, img = OpenCV.read(cap)
     if isopen(video_capture)
         try
             cv2.namedWindow(window_title, cv2.WINDOW_AUTOSIZE)
