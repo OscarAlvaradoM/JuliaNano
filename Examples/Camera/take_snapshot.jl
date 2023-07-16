@@ -33,40 +33,44 @@ function gstreamer_pipeline(
     """
 end
 
-
 function show_camera()
-    window_title = "CSI Camera"
-    
-    # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-    video_capture = VideoIO.open(gstreamer_pipeline(flip_method=0))
-    #ret, img = OpenCV.read(video_capture)
-    if !isnothing(video_capture)
-        try
-            while !eof(video_capture)
-                frame = read(video_capture)
-                
-                if isnothing(window) || !isopen(window)
-                    window = Images.imshow(frame, name=window_title)
-                else
-                    Images.imshow(window, frame)
-                end
-                
-                keyCode = waitkey(10) & 0xFF
-                # Stop the program on the ESC key or 'q'
-                if keyCode == 27 || keyCode == 'q'
-                    break
-                end
-            end
-        finally
-            close(video_capture)
-            if !isnothing(window)
-                destroy!(window)
-            end
-        end
-    else
-        println("Error: Unable to open camera")
-    end
+    pipeline = gstreamer_pipeline(flip_method=0)
+    run("gst-launch-1.0 "*pipeline)
 end
+
+# function show_camera()
+#     window_title = "CSI Camera"
+    
+#     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
+#     video_capture = VideoIO.open(gstreamer_pipeline(flip_method=0))
+#     #ret, img = OpenCV.read(video_capture)
+#     if !isnothing(video_capture)
+#         try
+#             while !eof(video_capture)
+#                 frame = read(video_capture)
+                
+#                 if isnothing(window) || !isopen(window)
+#                     window = Images.imshow(frame, name=window_title)
+#                 else
+#                     Images.imshow(window, frame)
+#                 end
+                
+#                 keyCode = waitkey(10) & 0xFF
+#                 # Stop the program on the ESC key or 'q'
+#                 if keyCode == 27 || keyCode == 'q'
+#                     break
+#                 end
+#             end
+#         finally
+#             close(video_capture)
+#             if !isnothing(window)
+#                 destroy!(window)
+#             end
+#         end
+#     else
+#         println("Error: Unable to open camera")
+#     end
+# end
 
 # Example usage
 show_camera()
