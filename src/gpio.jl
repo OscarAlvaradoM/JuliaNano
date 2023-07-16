@@ -9,9 +9,9 @@ module GPIO
     main_path = "/sys/class/gpio/"
     pwm_path  = "/sys/devices/7000a000.pwm/pwm/"
 
-    function cleanup(key::Int)
+    function cleanup(channel::Int)
         # Cleanup port
-        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
+        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[channel]["pwm_id"]
         if ~isnothing(pwm_id)
             if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
                 write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"), "0")
@@ -22,7 +22,7 @@ module GPIO
         end
         if isdir(main_path)
             try
-                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             catch
                 println("Ya está desactivado")
             end
@@ -47,7 +47,6 @@ module GPIO
             end
         end
         if isdir(main_path)
-            println(file_number)
             try
                 write(joinpath(main_path, "unexport"), file_number)
             catch
@@ -56,11 +55,11 @@ module GPIO
         end
     end
 
-    function activeup(key::Int)
-        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
+    function activeup(channel::Int)
+        pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[channel]["pwm_id"]
         if isdir(main_path)
             try
-                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+                write(joinpath(main_path, "export"), Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"])
             catch
                 println("Ya está activado")
             end
@@ -208,24 +207,19 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        print(getpwmdutycyclepath(pwm))
-        println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
         open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
             seek(f_duty_cycle, 0)
             write(f_duty_cycle, string(duty_cycle_ns))
             flush(f_duty_cycle)
         end
-        println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
     end
 
     function setpwmperiod(pwm::PWM, period_ns::Int64)
-        println("Valor del periodo: ", read(getpwmperiodpath(pwm), String))
         open(getpwmperiodpath(pwm), "w") do f_period
             seek(f_period, 0)
             write(f_period, string(period_ns))
             flush(f_period)
         end
-        println("Valor del periodo: ", read(getpwmperiodpath(pwm), String))
     end
     
     function reconfigure(pwm::PWM, frequency_hz::Real, duty_cycle_percent::Number; start::Bool=false)
@@ -235,7 +229,6 @@ module GPIO
 
         freq_change = start || frequency_hz != pwm.frequency_hz
         if freq_change
-            println("Cambió la frecuencia")
             pwm.frequency_hz = frequency_hz
             pwm.period_ns = trunc(Int, 1000000000.0 / frequency_hz)
             setpwmdutycycle(pwm, 0)
@@ -244,7 +237,6 @@ module GPIO
         
 
         duty_cycle_ns = trunc(Int, pwm.period_ns * (duty_cycle_percent / 100.0))
-        println(duty_cycle_percent, ' ', duty_cycle_ns, ' ', pwm.period_ns)
         setpwmdutycycle(pwm, duty_cycle_ns)
 
         if start
