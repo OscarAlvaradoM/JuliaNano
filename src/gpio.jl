@@ -11,7 +11,6 @@ module GPIO
 
     function cleanup(key::Int)
         # Cleanup port
-        println("limpieza", key)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
         if ~isnothing(pwm_id)
             if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
@@ -31,7 +30,6 @@ module GPIO
     end
 
     function activeup(key::Int)
-        println("activacion", key)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
         if isdir(main_path)
             try
