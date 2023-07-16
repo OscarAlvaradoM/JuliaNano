@@ -30,10 +30,13 @@ module GPIO
     end
 
     function cleanup(file_number::String)
+        # Cleanup port
         for key in keys(Utils.JETSON_NANO_CHANNELS_DICT)
             if file_number == Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"]
                 pwm_id = Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
-        # Cleanup port
+            end
+        end
+        
         if ~isnothing(pwm_id)
             if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
                 write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"), "0")
