@@ -208,6 +208,7 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
+        print(getpwmdutycyclepath(pwm))
         println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
         open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
             seek(f_duty_cycle, 0)
