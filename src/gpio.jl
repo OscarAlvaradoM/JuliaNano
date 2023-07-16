@@ -108,7 +108,7 @@ module GPIO
         open(io->read(io, String), joinpath(main_path, "gpio$(pin_in)", "value"))
     end
 
-    struct PWM
+    mutable struct PWM
         channel::Int
         frequency_hz::Number
     end
