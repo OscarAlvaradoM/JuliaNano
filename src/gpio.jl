@@ -217,8 +217,14 @@ module GPIO
         println("Valor del ciclo: ", read(getpwmdutycyclepath(pwm), String))
     end
 
-    function setpwmperiod(pwm, period_ns)
-        write(getpwmperiodpath(pwm), string(period_ns))
+    function setpwmperiod(pwm::PWM, period_ns::Int64)
+        println("Valor del periodo: ", read(getpwmperiodpath(pwm), String))
+        open(getpwmperiodpath(pwm), "w") do f_period
+            seek(f_period, 0)
+            write(f_period, string(period_ns))
+            flush(f_period)
+        end
+        println("Valor del periodo: ", read(getpwmperiodpath(pwm), String))
     end
     
     function reconfigure(pwm::PWM, frequency_hz::Real, duty_cycle_percent::Number; start::Bool=false)
