@@ -196,7 +196,7 @@ module GPIO
     - `channel::Int`: The GPIO channel number or identifier.
     - `value::Number`: The value to be set on the GPIO channel.
     """
-    function output(channel::Int, value::Number)
+    function output(channel::Int, value::String)
         pin_out = Utils.JETSON_NANO_CHANNELS_DICT[channel]["file_number"]
         write(joinpath(main_path, "gpio$(pin_out)", "value"), value)
     end
