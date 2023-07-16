@@ -29,6 +29,7 @@ function gstreamer_pipeline(
 end
 function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
+    println(pipeline)
     run(`gst-launch-1.0 $pipeline`)
 end
 
