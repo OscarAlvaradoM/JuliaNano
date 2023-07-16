@@ -111,7 +111,7 @@ module GPIO
     mutable struct PWM
         channel::Int
         frequency_hz::Number
-        period_ns::Int64 = Default(0)
+        period_ns::Int64
     end
 
     function PWM(channel::Int, frequency_hz::Number; period_ns::Int64 = 0)
