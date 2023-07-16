@@ -5,8 +5,7 @@ using Base.Filesystem
 GPIO.setmode()
 path = "/sys/class/gpio/"
 directories = filter(isdir, readdir(path))
-
-numbers = Int64[]
+println(directories)
 
 for directory in directories
     print(directory)
