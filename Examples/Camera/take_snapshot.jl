@@ -25,9 +25,8 @@ function gstreamer_pipeline(
     framerate::Int=30;
     flip_method::Int=0
 )::Cmd
-    return `nvarguscamerasrc sensor-id=$sensor_id`
+    return `nvarguscamerasrc sensor-id=$sensor_id ! 'video/x-raw(memory:NVMM), width=(int)$capture_width, height=(int)$capture_height, framerate=(fraction)$framerate/1' ! nvvidconv flip-method=$flip_method ! video/x-raw, width=(int)$display_width, height=(int)$display_height, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink`
 end
-# ! video/x-raw(memory:NVMM), width=(int)$capture_width, height=(int)$capture_height, framerate=(fraction)$framerate/1 ! nvvidconv flip-method=$flip_method ! video/x-raw, width=(int)$display_width, height=(int)$display_height, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink
 function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
     run(`gst-launch-1.0 $pipeline`)
@@ -69,3 +68,5 @@ end
 
 # Example usage
 show_camera()
+
+# gst-launch-1.0 nvarguscamerasrc sensor_id=0 ! 'video/x-raw(memory:NVMM), width=1920, height=1080, framerate=30/1' !    nvvidconv flip-method=0 ! 'video/x-raw,width=960, height=540' ! nvvidconv ! nvegltransform ! nveglglessink -e
