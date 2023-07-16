@@ -29,6 +29,25 @@ module GPIO
         end
     end
 
+    function cleanup(key::String)
+        # Cleanup port
+        if ~isnothing(pwm_id)
+            if isdir(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"))
+                write(joinpath(pwm_path, "pwmchip0", "pwm" * pwm_id, "enable"), "0")
+            end
+            if isdir(joinpath(pwm_path, "pwmchip0"))
+                write(joinpath(pwm_path, "pwmchip0", "unexport"), pwm_id)
+            end
+        end
+        if isdir(main_path)
+            try
+                write(joinpath(main_path, "unexport"), Utils.JETSON_NANO_CHANNELS_DICT[key]["file_number"])
+            catch
+                println("Ya está desactivado")
+            end
+        end
+    end
+
     function activeup(key::Int)
         pwm_id =  Utils.JETSON_NANO_CHANNELS_DICT[key]["pwm_id"]
         if isdir(main_path)
