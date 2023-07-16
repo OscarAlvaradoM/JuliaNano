@@ -26,20 +26,12 @@ function gstreamer_pipeline(
     flip_method::Int=0
 )::Cmd
     return `nvarguscamerasrc sensor-id=$sensor_id ! 'video/x-raw(memory:NVMM), width='$capture_width', height='$capture_height', framerate='$framerate'/1' ! nvvidconv flip-method=$flip_method ! video/x-raw, width=$display_width, height=$display_height ! nvvidconv ! nvegltransform ! nveglglessink -e`
-            #nvarguscamerasrc sensor_id=0 ! 'video/x-raw(memory:NVMM), width=1920, height=1080, framerate=30/1' !    nvvidconv flip-method=0 ! 'video/x-raw,width=960, height=540' ! nvvidconv ! nvegltransform ! nveglglessink -e
 end
 function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
     println(`gst-launch-1.0 $pipeline`)
-    run(`gst-launch-1.0 $pipeline`)
-
-    while true
-        keyCode = waitkey(10) & 0xFF
-        # Stop the program on the ESC key or 'q'
-        if keyCode == 27 || keyCode == 'q'
-            break
-        end
-    end
+    #run(`gst-launch-1.0 $pipeline`)
+    run(`nvgstcapture-1.0 --automate --capture-auto`)
 end
 
 # function show_camera()
