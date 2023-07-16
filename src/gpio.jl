@@ -208,7 +208,16 @@ module GPIO
     end
 
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        write(getpwmdutycyclepath(pwm), string(duty_cycle_ns))
+        open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
+            # Move the file pointer to the beginning
+            seek(f_duty_cycle, 0)
+        
+            # Write the duty cycle value to the file
+            write(f_duty_cycle, string(duty_cycle_ns))
+        
+            # Flush the changes to the file
+            flush(f_duty_cycle)
+        end
     end
 
     function setpwmperiod(pwm, period_ns)
