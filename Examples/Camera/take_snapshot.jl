@@ -38,7 +38,7 @@ function show_camera()
     window_title = "CSI Camera"
     
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-    video_capture = OpenCV.VideoCapture(gstreamer_pipeline(flip_method=0), :GSTREAMER)
+    video_capture = OpenCV.VideoCapture(gstreamer_pipeline(flip_method=0))
     if isopen(video_capture)
         try
             cv2.namedWindow(window_title, cv2.WINDOW_AUTOSIZE)
