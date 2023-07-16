@@ -48,7 +48,7 @@ module GPIO
         end
         if isdir(main_path)
             try
-                write(joinpath(main_path, "unexport"), pwm_id)
+                write(joinpath(main_path, "unexport"), file_number)
             catch
                 println("Ya está desactivado")
             end
