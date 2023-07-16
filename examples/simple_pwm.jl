@@ -7,12 +7,12 @@ function pwmbreath(channel)
 	# Set if the pin is an Output or Input pin
 	#GPIO.setup(channel, "OUT", GPIO.HIGH)
     pwm = GPIO.PWM(channel, 50)
-    val = 0
+    val = 5
     incr = 5
     GPIO.start(pwm, val)
     try
         while true
-            sleep(0.25)
+            sleep(0.1)
             if val >= 100
                 incr = -incr
             end
