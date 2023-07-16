@@ -195,6 +195,7 @@ module GPIO
         setpwmperiod(pwm, period_ns)
 
         duty_cycle_ns = trunc(Int, period_ns * (duty_cycle_percent / 100.0))
+        print(duty_cycle_percent, duty_cycle_ns, period_ns)
         setpwmdutycycle(pwm, duty_cycle_ns)
 
         if start
