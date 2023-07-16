@@ -32,6 +32,14 @@ function show_camera()
     pipeline = gstreamer_pipeline(flip_method=0)
     println(`gst-launch-1.0 $pipeline`)
     run(`gst-launch-1.0 $pipeline`)
+
+    while true
+        keyCode = waitkey(10) & 0xFF
+        # Stop the program on the ESC key or 'q'
+        if keyCode == 27 || keyCode == 'q'
+            break
+        end
+    end
 end
 
 # function show_camera()
