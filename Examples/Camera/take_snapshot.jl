@@ -24,7 +24,7 @@ function gstreamer_pipeline(
     display_height::Int=540,
     framerate::Int=30;
     flip_method::Int=0
-)::String
+)::Cmd
     return `nvarguscamerasrc sensor-id=$sensor_id`
 end
 # ! video/x-raw(memory:NVMM), width=(int)$capture_width, height=(int)$capture_height, framerate=(fraction)$framerate/1 ! nvvidconv flip-method=$flip_method ! video/x-raw, width=(int)$display_width, height=(int)$display_height, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink
