@@ -39,29 +39,29 @@ function show_camera()
     
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     video_capture = OpenCV.VideoCapture(gstreamer_pipeline(flip_method=0))
-    ret, img = OpenCV.read(cap)
-    if isopen(video_capture)
+    ret, img = OpenCV.read(video_capture)
+    if !isnothing(video_capture)
         try
-            cv2.namedWindow(window_title, cv2.WINDOW_AUTOSIZE)
-            while true
-                _, frame = read(video_capture)
-                # Check to see if the user closed the window
-                # Under GTK+ (Jetson Default), WND_PROP_VISIBLE does not work correctly. Under Qt it does
-                # GTK - Substitute WND_PROP_AUTOSIZE to detect if window has been closed by user
-                if cv2.getWindowProperty(window_title, cv2.WND_PROP_AUTOSIZE) >= 0
-                    cv2.imshow(window_title, frame)
+            while !eof(video_capture)
+                frame = read(video_capture)
+                
+                if isnothing(window) || !isopen(window)
+                    window = Images.imshow(frame, name=window_title)
                 else
-                    break
+                    Images.imshow(window, frame)
                 end
-                keyCode = cv2.waitKey(10) & 0xFF
+                
+                keyCode = waitkey(10) & 0xFF
                 # Stop the program on the ESC key or 'q'
-                if keyCode == 27 || keyCode == UInt8('q')
+                if keyCode == 27 || keyCode == 'q'
                     break
                 end
             end
         finally
-            release!(video_capture)
-            cv2.destroyAllWindows()
+            close(video_capture)
+            if !isnothing(window)
+                destroy!(window)
+            end
         end
     else
         println("Error: Unable to open camera")
