@@ -411,7 +411,7 @@ module GPIO
         open(getpwmdutycyclepath(pwm), "r+") do f_duty_cycle
             seek(f_duty_cycle, 0)
             write(f_duty_cycle, string(duty_cycle_ns))
-            flush(f_duty_cycle)
+            #flush(f_duty_cycle)
         end
     end
 
