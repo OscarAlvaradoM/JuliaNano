@@ -1,5 +1,5 @@
 """
-    gstreamer_pipeline([sensor_id::Int=0[, capture_width::Int=1920[, capture_height::Int=1080[, display_width::Int=960[, display_height::Int=540[, framerate::Int=30[, flip_method::Int=0]]]]]]])
+    gstreamer_pipeline(sensor_id::Int=0, capture_width::Int=1920, capture_height::Int=1080, display_width::Int=960, display_height::Int=540, framerate::Int=30, flip_method::Int=0):Cmd
 
 Constructs a GStreamer pipeline string for camera capture using the nvarguscamerasrc plugin.
 
@@ -24,13 +24,13 @@ function gstreamer_pipeline(
     display_height::Int=540,
     framerate::Int=30;
     flip_method::Int=0
-)::Cmd
+)
     return `nvarguscamerasrc sensor-id=$sensor_id ! 'video/x-raw(memory:NVMM), width='$capture_width', height='$capture_height', framerate='$framerate'/1' ! nvvidconv flip-method=$flip_method ! video/x-raw, width=$display_width, height=$display_height ! nvvidconv ! nvegltransform ! nveglglessink -e`
 end
 function show_camera()
-    pipeline = gstreamer_pipeline(flip_method=0)
-    println(`gst-launch-1.0 $pipeline`)
-    #run(`gst-launch-1.0 $pipeline`)
+    # pipeline = gstreamer_pipeline(flip_method=0)
+    # println(`gst-launch-1.0 $pipeline`)
+    # run(`gst-launch-1.0 $pipeline`)
     run(`nvgstcapture-1.0 --automate --capture-auto`)
 end
 
