@@ -31,7 +31,7 @@ function takesnapshot(name::String="nvcamtest")
     # pipeline = gstreamer_pipeline(flip_method=0)
     # println(`gst-launch-1.0 $pipeline`)
     # run(`gst-launch-1.0 $pipeline`)
-    run(`nvgstcapture-1.0 --automate --capture-auto filename=$name`)
+    run(`nvgstcapture-1.0 --automate --capture-auto --file-name=$name`)
     print(pwd())
     # NOTE: Use “nvgstcapture-1.0 --help” to refer supported command line options 
 end
