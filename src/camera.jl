@@ -13,7 +13,7 @@ module Camera
     - If return_image is false, the function returns nothing.
     """
     function takesnapshot(name::String="nvcamtest"; return_image::Bool=false)
-        run(`nvgstcapture-1.0 --automate --capture-auto --start-time=0 --file-name=$name`)
+        run(`nvgstcapture-1.0 --automate --capture-auto --start-time=0 --file-name=$name --orientation=2`)
         if return_image
             path_img = getimagepath(name)
             return load(path_img)

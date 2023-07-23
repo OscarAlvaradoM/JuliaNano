@@ -188,10 +188,18 @@ md"""
 
 # ╔═╡ e5e07b93-3049-40b4-b5c0-f24a28a14d67
 # ╠═╡ show_logs = false
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	go
 	img = Camera.takesnapshot(; return_image=true);
+	julia_logo = load("julia.png")
+	new_size = 70
+	julia_logo = imresize(julia_logo, (new_size, new_size))
+	img[end-(new_size-1):end, end-(new_size-1):end] = julia_logo
+	img
 end
+  ╠═╡ =#
 
 # ╔═╡ e6a1fb16-37a2-4fec-a25d-4eb6a7034540
 md"""
@@ -199,10 +207,15 @@ md"""
 """
 
 # ╔═╡ 268b2660-bad9-425b-b894-4fc8c5cc3f70
+# ╠═╡ disabled = true
+#=╠═╡
 @bind rotation Select([0, 90, 180, 270])
+  ╠═╡ =#
 
 # ╔═╡ fcccbe9c-a267-4799-9c9a-2acb9351dcdf
+#=╠═╡
 imrotate(img, π*rotation/180)
+  ╠═╡ =#
 
 # ╔═╡ Cell order:
 # ╟─423c7f7f-6a52-4445-848f-ea656798d8ed
@@ -221,8 +234,8 @@ imrotate(img, π*rotation/180)
 # ╟─a0b6c294-4612-404f-8000-fe4d238e82d7
 # ╠═6dfefa97-8073-4f0f-a7b9-6f14514cdfb1
 # ╟─891fe1bf-b5a5-4576-aa87-575ec0c90f6f
-# ╠═29bcfa0f-1c9c-41b4-9933-0805fed7986e
+# ╟─29bcfa0f-1c9c-41b4-9933-0805fed7986e
 # ╠═e5e07b93-3049-40b4-b5c0-f24a28a14d67
 # ╟─e6a1fb16-37a2-4fec-a25d-4eb6a7034540
-# ╠═268b2660-bad9-425b-b894-4fc8c5cc3f70
+# ╟─268b2660-bad9-425b-b894-4fc8c5cc3f70
 # ╠═fcccbe9c-a267-4799-9c9a-2acb9351dcdf
