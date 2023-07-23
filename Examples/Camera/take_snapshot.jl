@@ -27,48 +27,16 @@ function gstreamer_pipeline(
 )
     return `nvarguscamerasrc sensor-id=$sensor_id ! 'video/x-raw(memory:NVMM), width='$capture_width', height='$capture_height', framerate='$framerate'/1' ! nvvidconv flip-method=$flip_method ! video/x-raw, width=$display_width, height=$display_height ! nvvidconv ! nvegltransform ! nveglglessink -e`
 end
-function show_camera()
+function takesnapshot()
     # pipeline = gstreamer_pipeline(flip_method=0)
     # println(`gst-launch-1.0 $pipeline`)
     # run(`gst-launch-1.0 $pipeline`)
     run(`nvgstcapture-1.0 --automate --capture-auto`)
+    print(pwd())
+    # NOTE: Use “nvgstcapture-1.0 --help” to refer supported command line options 
 end
 
-# function show_camera()
-#     window_title = "CSI Camera"
-    
-#     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-#     video_capture = VideoIO.open(gstreamer_pipeline(flip_method=0))
-#     #ret, img = OpenCV.read(video_capture)
-#     if !isnothing(video_capture)
-#         try
-#             while !eof(video_capture)
-#                 frame = read(video_capture)
-                
-#                 if isnothing(window) || !isopen(window)
-#                     window = Images.imshow(frame, name=window_title)
-#                 else
-#                     Images.imshow(window, frame)
-#                 end
-                
-#                 keyCode = waitkey(10) & 0xFF
-#                 # Stop the program on the ESC key or 'q'
-#                 if keyCode == 27 || keyCode == 'q'
-#                     break
-#                 end
-#             end
-#         finally
-#             close(video_capture)
-#             if !isnothing(window)
-#                 destroy!(window)
-#             end
-#         end
-#     else
-#         println("Error: Unable to open camera")
-#     end
-# end
-
 # Example usage
-show_camera()
+takesnapshot()
 
 # gst-launch-1.0 nvarguscamerasrc sensor_id=0 ! 'video/x-raw(memory:NVMM), width=1920, height=1080, framerate=30/1' !    nvvidconv flip-method=0 ! 'video/x-raw,width=960, height=540' ! nvvidconv ! nvegltransform ! nveglglessink -e
