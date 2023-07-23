@@ -12,4 +12,4 @@ function takesnapshot(name::String="nvcamtest"; return_image::Bool=false)
 end
 
 # Example usage
-takesnapshot("/home/servicio1/Documentos/JuliaNano/prueba.jpg"; return_image=true)
+takesnapshot("/home/servicio1/Documentos/JuliaNano/prueba"; return_image=true)
