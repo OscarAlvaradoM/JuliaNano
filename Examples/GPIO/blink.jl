@@ -33,5 +33,5 @@ function blink(channel::Int)
 end
 
 # Usage example
-output_pin = 32
+output_pin = 12
 blink(output_pin)
