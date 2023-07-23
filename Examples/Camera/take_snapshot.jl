@@ -1,6 +1,6 @@
 using Images, FileIO
 
-function takesnapshot(name::String="nvcamtest"; return_image::bool=false)
+function takesnapshot(name::String="nvcamtest"; return_image::Bool=false)
     run(`nvgstcapture-1.0 --automate --capture-auto --file-name=$name`)
     if return_image
         if "/" in name
