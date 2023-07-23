@@ -38,7 +38,7 @@ module GPIO
     end
 
     """
-    cleanup(file_number::String)
+        cleanup(file_number::String)
 
     Cleans up the GPIO resources associated with the specified file number.
 
@@ -160,7 +160,7 @@ module GPIO
     end
 
     """
-    setup(channel::Int, mode::String)
+        setup(channel::Int, mode::String)
 
     Sets up the GPIO channel with the specified mode.
 
@@ -220,7 +220,7 @@ module GPIO
     end
 
     """
-    PWM(channel::Int, frequency_hz::Number; period_ns::Int = 0)::PWM
+        PWM(channel::Int, frequency_hz::Number; period_ns::Int = 0)::PWM
 
     Creates a new `PWM` object with the specified channel and frequency.
 
@@ -238,7 +238,7 @@ module GPIO
     end
 
     """
-    getpwmpath()::String
+        getpwmpath()::String
 
     Returns the path of the PWM chip.
 
@@ -269,7 +269,7 @@ module GPIO
     end
 
     """
-    getpwmperiodpath(pwm::PWM)::String
+        getpwmperiodpath(pwm::PWM)::String
 
     Returns the path of the period file for the specified PWM channel.
 
@@ -286,7 +286,7 @@ module GPIO
     end
 
     """
-    getpwmenablepath(pwm::PWM)::String
+        getpwmenablepath(pwm::PWM)::String
 
     Returns the path of the enable file for the specified PWM channel.
 
@@ -303,7 +303,7 @@ module GPIO
     end
 
     """
-    getpwmdutycyclepath(pwm::PWM)::String
+        getpwmdutycyclepath(pwm::PWM)::String
 
     Returns the path of the duty cycle file for the specified PWM channel.
 
