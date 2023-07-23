@@ -21,7 +21,7 @@ function gstreamer_pipeline(
     flip_method=0
 )
     return """
-        nvarguscamerasr
+    gst-launch-1.0 nvarguscamerasrc sensor_id=$(sensor_id) ! 'video/x-raw(memory:NVMM),width=$(capture_width), height=$(capture_height), framerate=$(framerate)/1' ! nvvidconv flip-method=$(flip_method) ! 'video/x-raw,width=$(display_width), height=$(display_height)' ! nvvidconv ! nvegltransform ! nveglglessink -e
         """
 end
 
