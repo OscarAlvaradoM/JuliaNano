@@ -18,4 +18,4 @@ function getimagepath(name::String)::String
 end
 
 # Example usage
-takesnapshot("/home/servicio1/Documentos/JuliaNano/prueba"; return_image=true)
+takesnapshot(; return_image=true)
