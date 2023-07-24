@@ -409,7 +409,7 @@ module GPIO
     function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
         let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
             seek(f_duty_cycle, 0)
-            write(f_duty_cycle, string(duty_cycle_ns))
+            #write(f_duty_cycle, string(duty_cycle_ns))
         end
         let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
             seek(f_duty_cycle, 0)
