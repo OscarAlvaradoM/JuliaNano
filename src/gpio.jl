@@ -416,7 +416,7 @@ module GPIO
             let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
                 seek(f_duty_cycle, 0)
                 write(f_duty_cycle, string(duty_cycle_ns))
-                #close(f_duty_cycle)
+                close(f_duty_cycle)
                 #flush(f_duty_cycle)
             end
         end
@@ -459,7 +459,7 @@ module GPIO
         if freq_change
             pwm.frequency_hz = frequency_hz
             pwm.period_ns = trunc(Int, 1000000000.0 / frequency_hz)
-            setpwmdutycycle(pwm, 0)
+            #setpwmdutycycle(pwm, 0)
             setpwmperiod(pwm, pwm.period_ns)
         end
         
