@@ -462,18 +462,13 @@ module GPIO
             #setpwmdutycycle(pwm, 0)
             setpwmperiod(pwm, pwm.period_ns)
         end
-        
+
+        duty_cycle_ns = trunc(Int, pwm.period_ns * (duty_cycle_percent / 100.0))
         if start
             enablepwm(pwm)
             setpwmdutycycle(pwm, duty_cycle_ns; start=true)
         end
-
-        duty_cycle_ns = trunc(Int, pwm.period_ns * (duty_cycle_percent / 100.0))
         setpwmdutycycle(pwm, duty_cycle_ns)
-
-        if start
-            enablepwm(pwm)
-        end
     end
 
     """
