@@ -406,7 +406,7 @@ module GPIO
     - `pwm::PWM`: The PWM object.
     - `duty_cycle_ns::Number`: The duty cycle in nanoseconds.
     """
-    function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number; start::Bool)
+    function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number; start::Bool=false)
         if start
             let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
                 seek(f_duty_cycle, 0)
