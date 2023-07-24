@@ -418,7 +418,7 @@ module GPIO
             let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
                 seek(f_duty_cycle, 0)
                 #close(f_duty_cycle)
-                flush(f_duty_cycle)
+                #flush(f_duty_cycle)
             end
             let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
                 seek(f_duty_cycle, 0)
