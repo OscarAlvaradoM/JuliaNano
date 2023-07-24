@@ -417,7 +417,7 @@ module GPIO
                 seek(f_duty_cycle, 0)
                 write(f_duty_cycle, string(duty_cycle_ns))
                 #close(f_duty_cycle)
-                flush(f_duty_cycle)
+                #flush(f_duty_cycle)
             end
         end
     end
