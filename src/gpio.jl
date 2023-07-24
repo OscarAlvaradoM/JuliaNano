@@ -406,15 +406,18 @@ module GPIO
     - `pwm::PWM`: The PWM object.
     - `duty_cycle_ns::Number`: The duty cycle in nanoseconds.
     """
-    function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number)
-        let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
-            seek(f_duty_cycle, 0)
-            #write(f_duty_cycle, string(duty_cycle_ns))
-        end
-        let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
-            seek(f_duty_cycle, 0)
-            write(f_duty_cycle, string(duty_cycle_ns))
-            close(f_duty_cycle)
+    function setpwmdutycycle(pwm::PWM, duty_cycle_ns::Number; start::Bool)
+        if start
+            let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
+                seek(f_duty_cycle, 0)
+                write(f_duty_cycle, string(duty_cycle_ns))
+            end
+        else
+            let f_duty_cycle = open(getpwmdutycyclepath(pwm), "r+")
+                seek(f_duty_cycle, 0)
+                write(f_duty_cycle, string(duty_cycle_ns))
+                close(f_duty_cycle)
+            end
         end
     end
 
@@ -459,6 +462,11 @@ module GPIO
             setpwmperiod(pwm, pwm.period_ns)
         end
         
+        if start
+            enablepwm(pwm)
+            setpwmdutycycle(pwm, duty_cycle_ns; start=true)
+        end
+
         duty_cycle_ns = trunc(Int, pwm.period_ns * (duty_cycle_percent / 100.0))
         setpwmdutycycle(pwm, duty_cycle_ns)
 
