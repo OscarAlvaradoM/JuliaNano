@@ -426,6 +426,7 @@ module GPIO
                 close(f_duty_cycle)
                 #flush(f_duty_cycle)
             end
+        end
     end
 
     """
